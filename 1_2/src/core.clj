@@ -8,10 +8,10 @@
           r (rest alphabet)
           new-result (conj result (str s f))]
       (if (= 0 (count s))
-        (recur s r new-result)
+        (create-word-seq s r new-result)
         (if (= f (str (last s)))
-          (recur s r result)
-          (recur s r new-result))))))
+          (create-word-seq s r result)
+          (create-word-seq s r new-result))))))
 
 (defn add-symbol
   [s alphabet result n]
@@ -20,11 +20,11 @@
     (let [f (first s)
           r (rest s)]
       (if (= n (count f))
-        (recur r alphabet (conj result f) n)
-        (recur (concat r (create-word-seq f alphabet `())) alphabet result n)))))
+        (add-symbol r alphabet (conj result f) n)
+        (add-symbol (concat r (create-word-seq f alphabet `())) alphabet result n)))))
 
 (defn -main
   [& args]
   (let [a '("a" "b" "c")
-        n 4]
+        n 2]
     (println (add-symbol `("") a `() n))))
